@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Late Night Hacks 2022',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Late Night Hacks 2022'),
     );
   }
 }
@@ -41,7 +41,18 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(widget.title),
+          const SizedBox(width: 20),
+          Image.asset(
+            'assets/images/rocket.png',
+            fit: BoxFit.contain,
+            height: 75,
+          ),
+        ],
+      
+        ),
+        toolbarHeight: 80.0,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -70,36 +81,44 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer ({Key? key}) : super(key: key);
+  const NavigationDrawer({Key? key}) : super(key: key);
 
-  @override 
+  @override
   Widget build(BuildContext context) => Drawer(
-    child: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          buildHeader(context),
-          buildMenuItems(context)
+        child: SingleChildScrollView(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[buildHeader(context), buildMenuItems(context)],
+        )),
+      );
+
+  Widget buildHeader(BuildContext context) => Container(
+        padding: EdgeInsets.only(
+            top: 24 + MediaQuery.of(context).padding.top, bottom: 5),
+        // TODO: Put user's data
+        child: Column(children: const [
+          CircleAvatar(
+            radius: 52,
+            backgroundImage: NetworkImage(
+                "https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=1600&h=900"),
+          ),
+          SizedBox(height: 12),
+          Text('Username', style: TextStyle(fontSize: 28)),
+          Text('username@gmail.com', style: TextStyle(fontSize: 15))
+        ]),
+      );
+
+  Widget buildMenuItems(BuildContext context) => Container(
+      padding: const EdgeInsets.all(20),
+      child: Wrap(
+        runSpacing: 15,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: const Text("Home"),
+            onTap: () {},
+          ),
+          // TODO: Add a function/widget that will loop through existing task lists and display here
         ],
-      )
-    ),
-  );
-
-  Widget buildHeader(BuildContext context) => Container();
-
-  Widget buildMenuItems(BuildContext context) => Column(
-    children: [
-      ListTile(
-        leading: const Icon(Icons.person),
-        title: const Text("username@gmail.com"),
-        onTap: () {},
-      ),
-      ListTile(
-        leading: const Icon(Icons.home_outlined),
-        title: const Text("Home"),
-        onTap: () {},
-      ),
-      // TODO: Add a function/widget that will loop through existing task lists and display here
-    ],
-  );
+      ));
 }
