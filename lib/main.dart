@@ -64,6 +64,42 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
+      drawer: const NavigationDrawer(),
     );
   }
+}
+
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer ({Key? key}) : super(key: key);
+
+  @override 
+  Widget build(BuildContext context) => Drawer(
+    child: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          buildHeader(context),
+          buildMenuItems(context)
+        ],
+      )
+    ),
+  );
+
+  Widget buildHeader(BuildContext context) => Container();
+
+  Widget buildMenuItems(BuildContext context) => Column(
+    children: [
+      ListTile(
+        leading: const Icon(Icons.person),
+        title: const Text("username@gmail.com"),
+        onTap: () {},
+      ),
+      ListTile(
+        leading: const Icon(Icons.home_outlined),
+        title: const Text("Home"),
+        onTap: () {},
+      ),
+      // TODO: Add a function/widget that will loop through existing task lists and display here
+    ],
+  );
 }
