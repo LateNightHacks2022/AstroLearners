@@ -159,7 +159,7 @@ class NavigationDrawer extends StatelessWidget {
               );
             },
           ),
-          GoogleSignInButton(),
+          Center(child: GoogleSignInButton()),
         ],
       ));
 }
