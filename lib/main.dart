@@ -130,6 +130,12 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               debugPrint("Clicked Home");
               Navigator.pop(context);
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MyHomePage(
+                            title: 'Weh Night Hacks 2022',
+                          )));
             },
           ),
           // TODO: Add a function/widget that will loop through existing task lists and display here
@@ -139,7 +145,7 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               debugPrint("Clicked Physics Ship");
               Navigator.pop(context);
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => const StudyPlanet("Physics Planet")),
@@ -165,11 +171,17 @@ class StudyPlanet extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             // Navigate back to first route when tapped.
-            Navigator.pop(context);
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const MyHomePage(
+                          title: 'Weh Night Hacks 2022',
+                        )));
           },
           child: const Text('Go back!'),
         ),
       ),
+      drawer: const NavigationDrawer(),
     );
   }
 }
