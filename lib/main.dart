@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // new
+import 'package:firebase_core/firebase_core.dart'; // new
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import 'navigation_drawer.dart'; // new
+
+// import 'firebase_options.dart'; // new
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Late Night Hacks 2022'),
+      home: const MyHomePage(title: 'Weh Night Hacks 2022'),
     );
   }
 }
@@ -41,16 +51,17 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(widget.title),
-          const SizedBox(width: 20),
-          Image.asset(
-            'assets/images/rocket.png',
-            fit: BoxFit.contain,
-            height: 75,
-          ),
-        ],
-      
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(widget.title),
+            const SizedBox(width: 20),
+            Image.asset(
+              'assets/images/rocket.png',
+              fit: BoxFit.contain,
+              height: 75,
+            ),
+          ],
         ),
         toolbarHeight: 80.0,
       ),
@@ -61,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              '<We gonna list their personal stats/info or num of ships here or some shit>',
             ),
             Text(
               '$_counter',
@@ -116,9 +127,49 @@ class NavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text("Home"),
-            onTap: () {},
+            onTap: () {
+              debugPrint("Clicked Home");
+              Navigator.pop(context);
+            },
           ),
           // TODO: Add a function/widget that will loop through existing task lists and display here
+          ListTile(
+            leading: const Icon(Icons.public),
+            title: const Text("Physics Planet"),
+            onTap: () {
+              debugPrint("Clicked Physics Ship");
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const StudyPlanet("Physics Planet")),
+              );
+            },
+          ),
         ],
       ));
+}
+
+class StudyPlanet extends StatelessWidget {
+  const StudyPlanet(this.shipTitle, {Key? key}) : super(key: key);
+
+  final String shipTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(shipTitle),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigate back to first route when tapped.
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
+        ),
+      ),
+    );
+  }
 }
