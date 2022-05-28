@@ -167,20 +167,32 @@ class StudyPlanet extends StatelessWidget {
       appBar: AppBar(
         title: Text(shipTitle),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const MyHomePage(
-                          title: 'Weh Night Hacks 2022',
-                        )));
-          },
-          child: const Text('Go back!'),
+      body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(
+          // grey box
+          width: 320,
+          height: 240,
+          color: Colors.grey[300],
+          child: Center(
+            child: Container(
+              // red box
+              width: 240, // max-width is 240
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.red[400],
+              ),
+              child: Text(
+                'Lorem ipsum',
+                style: GoogleFonts.montserrat(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
         ),
-      ),
+      ]),
       drawer: const NavigationDrawer(),
     );
   }
