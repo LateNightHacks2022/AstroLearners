@@ -7,10 +7,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'navigation_drawer.dart'; // new
+import './authentication.dart';
+import './firebase_options.dart';
 
-// import 'firebase_options.dart'; // new
+import 'package:late_nighthacks/login_button.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.web);
   runApp(const MyApp());
 }
 
@@ -31,7 +36,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title, User? user})
+      : super(key: key);
   final String title;
 
   @override
@@ -92,7 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+  const NavigationDrawer({Key? key, User? user})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -152,6 +159,7 @@ class NavigationDrawer extends StatelessWidget {
               );
             },
           ),
+          GoogleSignInButton(),
         ],
       ));
 }
