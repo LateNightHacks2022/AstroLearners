@@ -163,6 +163,7 @@ class NavigationDrawer extends StatelessWidget {
       );
 }
 
+
 class StudyPlanet extends StatelessWidget {
   const StudyPlanet(this.shipTitle, {Key? key}) : super(key: key);
   final String shipTitle;
