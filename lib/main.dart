@@ -43,7 +43,7 @@ class _NewPlanetSelectionState extends State<NewPlanetSelection> {
   final _textController1 = TextEditingController();
   String planetName = ' ';
   String examDate = ' ';
-  String planetColour = ' ';
+  String planetColour = 'earth2';
   bool isWhite = false;
   bool isBlack = false;
   bool isPink = false;
@@ -101,31 +101,27 @@ class _NewPlanetSelectionState extends State<NewPlanetSelection> {
                 color: Colors.black,
               ),
             ),
-            Row(
+            Center(child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 10.0, left: 10),
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isWhite = true;
-                        planetColour = 'White';
+                        planetColour = 'Green';
                       });
                     },
-                    child: Text('White'),
+                    child: Text('Green'),
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.white, onPrimary: Colors.black),
+                        primary: Colors.green, onPrimary: Colors.black),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 10.0, left: 5.0),
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isBlack = true;
                         planetColour = 'Black';
                       });
                     },
@@ -135,12 +131,23 @@ class _NewPlanetSelectionState extends State<NewPlanetSelection> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 10.0, left: 5.0),
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isPink = true;
+                        planetColour = 'White';
+                      });
+                    },
+                    child: Text('White'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white, onPrimary: Colors.black),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
                         planetColour = 'Pink';
                       });
                     },
@@ -150,12 +157,10 @@ class _NewPlanetSelectionState extends State<NewPlanetSelection> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 10.0, left: 5.0),
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isBlue = true;
                         planetColour = 'Blue';
                       });
                     },
@@ -165,13 +170,13 @@ class _NewPlanetSelectionState extends State<NewPlanetSelection> {
                   ),
                 ),
               ],
-            ),
+            )),
             Card(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Image.asset(
-                    'images/earth2.jpg',
+                    'assets/images/$planetColour.jpg',
                     height: 400,
                     width: 1000,
                   ),
@@ -180,7 +185,7 @@ class _NewPlanetSelectionState extends State<NewPlanetSelection> {
               ),
             ),
             Text(
-                'Planet Name is $planetName \nPlanet Depature Date is $examDate \nPlanet Color is $planetColour'),
+                'Planet Name is $planetName \nPlanet Depature Date is $examDate \nPlanet Colour is $planetColour'),
             MaterialButton(
               onPressed: () {
                 setState(() {
