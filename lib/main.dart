@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const MissionLog(title: "Chloe Misison Log"),
-      // home: const MyHomePage(title: 'Weh Night Hacks 2022'),
+      // home: const MissionLog(title: "Chloe Misison Log"),
+      home: const MyHomePage(title: 'Weh Night Hacks 2022'),
     );
   }
 }
