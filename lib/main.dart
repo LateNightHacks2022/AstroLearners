@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       // home: const MissionLog(title: "Chloe Misison Log"),
-      home: const MyHomePage(title: 'Weh Night Hacks 2022'),
+      home: const MyHomePage(title: 'AstroLearners'),
     );
   }
 }
@@ -55,9 +55,8 @@ class _NewPlanetSelectionState extends State<NewPlanetSelection> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Center(
-            child: Text('AstroLearners'),
-          ),
+        backgroundColor: Colors.indigo,
+        title: const Center(child: Text("Add New Planet")),
         ),
         body: Column(
           children: [
@@ -194,6 +193,7 @@ class _NewPlanetSelectionState extends State<NewPlanetSelection> {
             ),
           ],
         ),
+        drawer: const NavigationDrawer(),
       ),
     );
   }
