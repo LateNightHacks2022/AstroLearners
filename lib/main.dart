@@ -143,7 +143,6 @@ class NavigationDrawer extends StatelessWidget {
                 );
               },
             ),
-            // TODO: Add a function/widget that will loop through existing task lists and display here
             ListTile(
               leading: const Icon(Icons.public),
               title: const Text("Physics Planet"),
@@ -554,7 +553,6 @@ class _TodoListState extends State<TodoList> {
 
   int priotityCount = 0;
 
-  // TODO: fetch the todo from firebase by query the todo that has the matching planet id and matching user id
   final Stream<QuerySnapshot> _todosStream = FirebaseFirestore.instance
       .collection('AstroLearnersTODOS')
       .doc("Shc3Dcj0YRaIqUBg50RP")
