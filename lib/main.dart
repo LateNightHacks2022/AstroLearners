@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // new
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'firebase_options.dart';
 import 'home.dart';
+import 'login_button.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,11 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
       drawer: const NavigationDrawer(),
-
     );
   }
 }
-
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key, User? user}) : super(key: key);
@@ -162,7 +162,6 @@ class NavigationDrawer extends StatelessWidget {
         ),
       );
 }
-
 
 class StudyPlanet extends StatelessWidget {
   const StudyPlanet(this.shipTitle, {Key? key}) : super(key: key);
@@ -454,7 +453,6 @@ class _MissionLogState extends State<MissionLog> {
                             fontSize: 18,
                             color: Color.fromARGB(255, 0, 255, 247),
                           ),
-
                         ),
                       ),
                     ),
@@ -465,7 +463,6 @@ class _MissionLogState extends State<MissionLog> {
           ),
         ),
       ),
-
     );
   }
 
@@ -560,7 +557,7 @@ class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: Color.fromARGB(0, 0, 0, 0),
       body: Scrollbar(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
