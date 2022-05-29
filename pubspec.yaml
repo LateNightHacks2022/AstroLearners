@@ -61,12 +61,11 @@ flutter:
   assets:
     - assets/earth2.jpg
     - assets/earth.jpg
-    - assets/black_planet.jpg
-    - assets/blue_planet.jpg
-    - assets/pink_planet.jpg
-    - assets/white_planet.jpg
-    - assets/green_planet.jpg
-  #   - images/a_dot_ham.jpeg
+    - assets/Black.jpg
+    - assets/Blue.jpg
+    - assets/Pink.jpg
+    - assets/White.jpg
+    - assets/Green.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

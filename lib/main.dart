@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   final _textController1 = TextEditingController();
   String planetName = ' ';
   String examDate = ' ';
-  String planetColour = ' ';
+  String planetColour = 'earth2';
   bool confirmSelection = false;
 
   @override
@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Image.asset(
-                    'assets/earth2.jpg',
+                    'assets/$planetColour.jpg',
                     height: 400,
                     width: 1000,
                   ),
@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             Text(
-                'Planet Name is $planetName \nPlanet Depature Date is $examDate \nPlanet Color is $planetColour'),
+                'Planet Name is $planetName \nPlanet Depature Date is $examDate \nPlanet Colour is $planetColour'),
             MaterialButton(
               onPressed: () {
                 setState(() {
