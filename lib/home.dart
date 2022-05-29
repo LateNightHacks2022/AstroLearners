@@ -6,9 +6,9 @@ import 'logout_button.dart';
 import 'main.dart';
 
 class MyHomePage extends StatefulWidget {
-  static var user = Profile("Username", "username@gmail.com", "https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=1600&h=900");
-  MyHomePage({Key? key, required this.title})
-      : super(key: key);
+  static var user = Profile("Username", "username@gmail.com",
+      "https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=1600&h=900");
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -16,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -53,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: const NavigationDrawer(),
     );
   }
+
   _NavigationDrawer createState() => _NavigationDrawer();
 }
 
@@ -81,7 +82,6 @@ class _NavigationDrawer extends State<NavigationDrawer> {
   Widget buildHeader(BuildContext context) => Container(
         padding: EdgeInsets.only(
             top: 24 + MediaQuery.of(context).padding.top, bottom: 5),
-        // TODO: Put user's data
         child: Column(
           children: [
             CircleAvatar(
@@ -109,7 +109,7 @@ class _NavigationDrawer extends State<NavigationDrawer> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MyHomePage(
+                      builder: (context) => const MyHomePage(
                             title: 'AstroLearners',
                           )));
             },
@@ -124,13 +124,13 @@ class _NavigationDrawer extends State<NavigationDrawer> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const StudyPlanet("Physics Planet")),
+                    builder: (context) => const StudyPlanet("Physics Planet"),)
               );
             },
           ),
-          MyHomePage.user.name == "Username" ?
-          const Center(child: GoogleSignInButton())
-          : const Center(child: GoogleSignOutButton()),
+          MyHomePage.user.name == "Username"
+              ? const Center(child: GoogleSignInButton())
+              : const Center(child: GoogleSignOutButton()),
         ],
       ));
 }
