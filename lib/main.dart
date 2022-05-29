@@ -344,26 +344,24 @@ class MissionLog extends StatefulWidget {
 }
 
 class _MissionLogState extends State<MissionLog> {
-  // final GlobalKey _widgetKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(widget.title),
-            const SizedBox(width: 20),
-            Image.asset(
-              '../assets/images/rocket.png',
-              fit: BoxFit.contain,
-              height: 75,
-            ),
-          ],
-        ),
-        toolbarHeight: 80.0,
-      ),
+      // appBar: AppBar(
+      //   title: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text(widget.title),
+      //       const SizedBox(width: 20),
+      //       Image.asset(
+      //         '../assets/images/rocket.png',
+      //         fit: BoxFit.contain,
+      //         height: 75,
+      //       ),
+      //     ],
+      //   ),
+      //   toolbarHeight: 80.0,
+      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -375,8 +373,8 @@ class _MissionLogState extends State<MissionLog> {
         ),
         child: Center(
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.8,
-            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.9,
+            width: MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
@@ -387,10 +385,7 @@ class _MissionLogState extends State<MissionLog> {
                 top: 0,
                 left: 0,
                 child: Container(
-                  // height: MediaQuery.of(context).size.height * 0.2,
-                  // width: MediaQuery.of(context).size.width * 0.5,
                   alignment: Alignment.topLeft,
-                  // margin: new EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                   child: FittedBox(
                     fit: BoxFit.fill,
                     child: SvgPicture.asset(
@@ -408,7 +403,6 @@ class _MissionLogState extends State<MissionLog> {
                 right: 0,
                 child: Container(
                   alignment: Alignment.bottomRight,
-                  // margin: new EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                   child: FittedBox(
                     fit: BoxFit.fill,
                     child: SvgPicture.asset(
@@ -426,33 +420,63 @@ class _MissionLogState extends State<MissionLog> {
                 left: 0,
                 child: Center(
                   child: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    margin: const EdgeInsets.all(40),
-                    height: MediaQuery.of(context).size.height * 0.8 - 120,
-                    width: MediaQuery.of(context).size.width * 0.8 - 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color.fromARGB(187, 177, 177, 177),
+                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.all(40),
+                      height: MediaQuery.of(context).size.height * 0.9 - 130,
+                      width: MediaQuery.of(context).size.width * 0.9 - 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color.fromARGB(187, 177, 177, 177),
+                      ),
+                      child: Text("todolistHere")),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.9 - 10,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    widget.title,
+                    textDirection: TextDirection.rtl,
+                    style: const TextStyle(
+                        fontFamily: "Oxanium",
+                        fontSize: 28,
+                        color: Color.fromARGB(255, 0, 255, 247)),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color.fromARGB(255, 0, 255, 247)),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  margin: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  alignment: Alignment.bottomLeft,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    }, // Handle your callback
+                    child: Ink(
+                      color: Color.fromARGB(255, 0, 255, 247),
+                      child: Container(
+                        padding: const EdgeInsets.all(5.0),
+                        child: const Text(
+                          "< Back",
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            fontFamily: "Oxanium",
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 0, 255, 247),
+                          ),
+                        ),
+                      ),
                     ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "Name: Chloe",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Items remaining: 3",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Mission status: In progress",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                        ]),
                   ),
                 ),
               ),
@@ -465,10 +489,10 @@ class _MissionLogState extends State<MissionLog> {
 
   List<Color> get gradient1Colors {
     return [
-      const Color.fromARGB(255, 0, 32, 47),
-      const Color.fromARGB(255, 0, 20, 29),
-      const Color.fromARGB(255, 0, 20, 29),
-      const Color.fromARGB(255, 0, 32, 47),
+      Color.fromARGB(255, 0, 55, 82),
+      Color.fromARGB(255, 0, 27, 39),
+      Color.fromARGB(255, 0, 27, 39),
+      Color.fromARGB(255, 0, 55, 82),
     ];
   }
 
