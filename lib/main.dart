@@ -555,33 +555,56 @@ class _TodoListState extends State<TodoList> {
   int priotityCount = 0;
 
   // TODO: fetch the todo from firebase by query the todo that has the matching planet id and matching user id
+  final Stream<QuerySnapshot> _todosStream = FirebaseFirestore.instance
+      .collection('AstroLearnersTODOS')
+      .doc("Shc3Dcj0YRaIqUBg50RP")
+      .collection("TODOS")
+      .snapshots();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(0, 0, 0, 0),
-      body: Scrollbar(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          children: _todos.map((Todo todo) {
-            return TodoItem(
-              todo: todo,
-              onTodoChanged: _handleTodoChange,
-            );
-          }).toList(),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 0, 255, 247),
-          foregroundColor: Color.fromARGB(255, 0, 0, 0),
-          onPressed: () => _displayDialog(),
-          tooltip: 'Add Item',
-          child: const Icon(Icons.add_task)),
+    return StreamBuilder<QuerySnapshot>(
+      stream: _todosStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text("Loading");
+        }
+
+        return Scaffold(
+          backgroundColor: Color.fromARGB(0, 0, 0, 0),
+          body: Scrollbar(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return TodoItem(
+                  todo: Todo(
+                      docId: document.id as String,
+                      name: data['name'] as String,
+                      checked: data['checked'] as bool,
+                      priority: data['priority'] as int),
+                  onTodoChanged: _handleTodoChange,
+                );
+              }).toList(),
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+              backgroundColor: const Color.fromARGB(255, 0, 255, 247),
+              foregroundColor: Color.fromARGB(255, 0, 0, 0),
+              onPressed: () => _displayDialog(),
+              tooltip: 'Add Item',
+              child: const Icon(Icons.add_task)),
+        );
+      },
     );
   }
 
   void _handleTodoChange(Todo todo) async {
-    // TODO: update firebase
-
     await FirebaseFirestore.instance
         .collection("AstroLearnersTODOS")
         .doc("Shc3Dcj0YRaIqUBg50RP")
@@ -605,7 +628,7 @@ class _TodoListState extends State<TodoList> {
       "priority": priority,
       "checked": checked,
     });
-    print(docId.id);
+
     setState(() {
       _todos.add(Todo(
           docId: docId.id, name: name, checked: checked, priority: priority));
