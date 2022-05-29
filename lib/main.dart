@@ -143,6 +143,8 @@ class NavigationDrawer extends StatelessWidget {
                 );
               },
             ),
+
+            //TODO: Fetch the full list of planets for this user from firebase
             ListTile(
               leading: const Icon(Icons.public),
               title: const Text("Physics Planet"),
@@ -157,12 +159,191 @@ class NavigationDrawer extends StatelessWidget {
                 );
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.add_location_alt),
+              title: const Text("Add New Planet"),
+              onTap: () {
+                debugPrint("Clicked New Planet");
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewPlanetSelection()),
+                );
+              },
+            ),
             Center(child: GoogleSignInButton()),
           ],
         ),
       );
 }
 
+class NewPlanetSelection extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _NewPlanetSelectionState();
+  }
+}
+
+class _NewPlanetSelectionState extends State<NewPlanetSelection> {
+  final _textController0 = TextEditingController();
+  final _textController1 = TextEditingController();
+  String planetName = ' ';
+  String examDate = ' ';
+  String planetColour = ' ';
+  bool isWhite = false;
+  bool isBlack = false;
+  bool isPink = false;
+  bool isBlue = false;
+  bool confirmSelection = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Center(
+            child: Text('AstroLearners'),
+          ),
+        ),
+        body: Column(
+          children: [
+            TextField(
+              textAlign: TextAlign.center,
+              controller: _textController0,
+              decoration: const InputDecoration(
+                hintText: 'What\'s your planet name?',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            MaterialButton(
+              onPressed: () {
+                setState(() {
+                  planetName = _textController0.text;
+                });
+              },
+              color: Colors.green,
+              child: const Text('Apply', style: TextStyle(color: Colors.white)),
+            ),
+            TextField(
+              textAlign: TextAlign.center,
+              controller: _textController1,
+              decoration: const InputDecoration(
+                hintText: 'What\'s your departure date (DDMMYYYY)?',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            MaterialButton(
+              onPressed: () {
+                setState(() {
+                  examDate = _textController1.text;
+                });
+              },
+              color: Colors.green,
+              child: const Text('Apply', style: TextStyle(color: Colors.white)),
+            ),
+            const Text(
+              'What\'s your planet colour?',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0, left: 10),
+                  alignment: Alignment.topLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isWhite = true;
+                        planetColour = 'White';
+                      });
+                    },
+                    child: Text('White'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white, onPrimary: Colors.black),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0, left: 5.0),
+                  alignment: Alignment.topLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isBlack = true;
+                        planetColour = 'Black';
+                      });
+                    },
+                    child: Text('Black'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.black, onPrimary: Colors.white),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0, left: 5.0),
+                  alignment: Alignment.topLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isPink = true;
+                        planetColour = 'Pink';
+                      });
+                    },
+                    child: Text('Pink'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.pink, onPrimary: Colors.black),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0, left: 5.0),
+                  alignment: Alignment.topLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isBlue = true;
+                        planetColour = 'Blue';
+                      });
+                    },
+                    child: Text('Blue'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.blue, onPrimary: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            Card(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Image.asset(
+                    'images/earth2.jpg',
+                    height: 400,
+                    width: 1000,
+                  ),
+                  Text(planetName)
+                ],
+              ),
+            ),
+            Text(
+                'Planet Name is $planetName \nPlanet Depature Date is $examDate \nPlanet Color is $planetColour'),
+            MaterialButton(
+              onPressed: () {
+                setState(() {
+                  confirmSelection = true;
+                });
+              },
+              color: Colors.green,
+              child: const Text('Confirm Selection',
+                  style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class StudyPlanet extends StatelessWidget {
   const StudyPlanet(this.shipTitle, {Key? key}) : super(key: key);
