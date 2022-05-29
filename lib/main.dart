@@ -30,9 +30,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const MissionLog(
-          title:
-              "Chloe Misison Log"), //MyHomePage(title: 'Weh Night Hacks 2022'),
+      home: const MissionLog(title: "Chloe Misison Log"),
+      // home: const MyHomePage(title: 'Weh Night Hacks 2022'),
     );
   }
 }
@@ -347,21 +346,6 @@ class _MissionLogState extends State<MissionLog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Row(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       Text(widget.title),
-      //       const SizedBox(width: 20),
-      //       Image.asset(
-      //         '../assets/images/rocket.png',
-      //         fit: BoxFit.contain,
-      //         height: 75,
-      //       ),
-      //     ],
-      //   ),
-      //   toolbarHeight: 80.0,
-      // ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -420,15 +404,16 @@ class _MissionLogState extends State<MissionLog> {
                 left: 0,
                 child: Center(
                   child: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      margin: const EdgeInsets.all(40),
-                      height: MediaQuery.of(context).size.height * 0.9 - 130,
-                      width: MediaQuery.of(context).size.width * 0.9 - 120,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromARGB(187, 177, 177, 177),
-                      ),
-                      child: Text("todolistHere")),
+                    padding: const EdgeInsets.all(10.0),
+                    margin: const EdgeInsets.all(40),
+                    height: MediaQuery.of(context).size.height * 0.9 - 130,
+                    width: MediaQuery.of(context).size.width * 0.9 - 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      // color: const Color.fromARGB(187, 177, 177, 177),
+                    ),
+                    child: TodoList(),
+                  ),
                 ),
               ),
               Positioned(
@@ -489,10 +474,10 @@ class _MissionLogState extends State<MissionLog> {
 
   List<Color> get gradient1Colors {
     return [
-      Color.fromARGB(255, 0, 55, 82),
-      Color.fromARGB(255, 0, 27, 39),
-      Color.fromARGB(255, 0, 27, 39),
-      Color.fromARGB(255, 0, 55, 82),
+      Color.fromARGB(255, 0, 71, 107),
+      Color.fromARGB(255, 0, 47, 68),
+      Color.fromARGB(255, 0, 47, 68),
+      Color.fromARGB(255, 0, 71, 107),
     ];
   }
 
@@ -503,5 +488,181 @@ class _MissionLogState extends State<MissionLog> {
       0.6,
       1.0,
     ];
+  }
+}
+
+class Todo {
+  Todo(
+      {required this.docId,
+      required this.name,
+      required this.checked,
+      required this.priority});
+  final String docId;
+  final String name;
+  bool checked;
+  int priority;
+}
+
+class TodoItem extends StatelessWidget {
+  TodoItem({
+    required this.todo,
+    required this.onTodoChanged,
+  }) : super(key: ObjectKey(todo));
+
+  final Todo todo;
+  final onTodoChanged;
+
+  TextStyle? _getTextStyle(bool checked) {
+    if (!checked) {
+      return const TextStyle(
+        color: Color.fromARGB(255, 255, 255, 255),
+        fontFamily: "Oxanium",
+        fontSize: 14,
+      );
+    } else {
+      return const TextStyle(
+        color: Color.fromARGB(255, 128, 128, 128),
+        decoration: TextDecoration.lineThrough,
+        fontFamily: "Oxanium",
+        fontSize: 14,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () {
+        onTodoChanged(todo);
+      },
+      leading: CircleAvatar(
+        backgroundColor: (todo.checked
+            ? const Color.fromARGB(255, 77, 77, 77)
+            : const Color.fromARGB(255, 0, 255, 247)),
+        foregroundColor: Color.fromARGB(255, 0, 0, 0),
+        child: Text(todo.priority.toString()),
+      ),
+      title: Text(todo.name, style: _getTextStyle(todo.checked)),
+    );
+  }
+}
+
+class TodoList extends StatefulWidget {
+  @override
+  _TodoListState createState() => new _TodoListState();
+}
+
+class _TodoListState extends State<TodoList> {
+  final TextEditingController _textFieldController = TextEditingController();
+
+  final List<Todo> _todos = <Todo>[];
+
+  int priotityCount = 0;
+
+  // TODO: fetch the todo from firebase by query the todo that has the matching planet id and matching user id
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      body: Scrollbar(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          children: _todos.map((Todo todo) {
+            return TodoItem(
+              todo: todo,
+              onTodoChanged: _handleTodoChange,
+            );
+          }).toList(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 0, 255, 247),
+          foregroundColor: Color.fromARGB(255, 0, 0, 0),
+          onPressed: () => _displayDialog(),
+          tooltip: 'Add Item',
+          child: const Icon(Icons.add_task)),
+    );
+  }
+
+  void _handleTodoChange(Todo todo) {
+    setState(() {
+      todo.checked = !todo.checked;
+      // TODO: update firebase
+    });
+  }
+
+  void _addTodoItem(String name, int priority) {
+    setState(() {
+      // TODO: Create doc in firebase, get back doc id
+      _todos.add(
+          Todo(docId: "dddd", name: name, checked: false, priority: priority));
+    });
+    _textFieldController.clear();
+  }
+
+  Future<void> _displayDialog() async {
+    final String todoName;
+    final int todoPriority;
+    int dropdownValue = 1;
+
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => StatefulBuilder(
+              builder: (BuildContext context, setState) {
+                return AlertDialog(
+                  title: const Text('Add a new task'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        TextField(
+                          controller: _textFieldController,
+                          decoration: const InputDecoration(
+                            hintText: "Task Name",
+                          ),
+                        ),
+                        DropdownButton<String>(
+                          value: dropdownValue.toString(),
+                          icon: const Icon(Icons.arrow_downward),
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.deepPurple),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = int.parse(newValue!);
+                            });
+                          },
+                          items: <int>[1, 2]
+                              .map<DropdownMenuItem<String>>((int value) {
+                            return DropdownMenuItem<String>(
+                              value: value.toString(),
+                              child: Text(value.toString()),
+                            );
+                          }).toList(),
+                        )
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: const Text('Cancel'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: const Text('Add'),
+                      onPressed: () {
+                        _addTodoItem(_textFieldController.text, dropdownValue);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            ));
   }
 }
