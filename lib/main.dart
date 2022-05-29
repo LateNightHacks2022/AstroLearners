@@ -29,10 +29,6 @@ class _MyAppState extends State<MyApp> {
   String planetName = ' ';
   String examDate = ' ';
   String planetColour = ' ';
-  bool isWhite = false;
-  bool isBlack = false;
-  bool isPink = false;
-  bool isBlue = false;
   bool confirmSelection = false;
 
   @override
@@ -55,15 +51,6 @@ class _MyAppState extends State<MyApp> {
                 border: OutlineInputBorder(),
               ),
             ),
-            MaterialButton(
-              onPressed: () {
-                setState(() {
-                  planetName = _textController0.text;
-                });
-              },
-              color: Colors.green,
-              child: const Text('Apply', style: TextStyle(color: Colors.white)),
-            ),
             TextField(
               textAlign: TextAlign.center,
               controller: _textController1,
@@ -72,19 +59,10 @@ class _MyAppState extends State<MyApp> {
                 border: OutlineInputBorder(),
               ),
             ),
-            MaterialButton(
-              onPressed: () {
-                setState(() {
-                  examDate = _textController1.text;
-                });
-              },
-              color: Colors.green,
-              child: const Text('Apply', style: TextStyle(color: Colors.white)),
-            ),
             const Text(
               'What\'s your planet colour?',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 color: Colors.black,
               ),
             ),
@@ -96,7 +74,6 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isWhite = true;
                         planetColour = 'White';
                       });
                     },
@@ -111,7 +88,6 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isBlack = true;
                         planetColour = 'Black';
                       });
                     },
@@ -126,7 +102,6 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isPink = true;
                         planetColour = 'Pink';
                       });
                     },
@@ -141,7 +116,6 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        isBlue = true;
                         planetColour = 'Blue';
                       });
                     },
@@ -161,7 +135,6 @@ class _MyAppState extends State<MyApp> {
                     height: 400,
                     width: 1000,
                   ),
-                  Text(planetName)
                 ],
               ),
             ),
@@ -170,6 +143,8 @@ class _MyAppState extends State<MyApp> {
             MaterialButton(
               onPressed: () {
                 setState(() {
+                  planetName = _textController0.text;
+                  examDate = _textController1.text;
                   confirmSelection = true;
                 });
               },
