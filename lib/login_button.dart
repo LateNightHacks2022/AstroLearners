@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import './authentication.dart';
-import './main.dart';
+import './home.dart';
 
 class GoogleSignInButton extends StatefulWidget {
+  const GoogleSignInButton({Key? key}) : super(key: key);
+
   @override
   _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
 }
@@ -41,12 +44,15 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 });
 
                 if (user != null) {
-                  debugPrint(user.toString());
+                  MyHomePage.user.name = user.displayName!;
+                  MyHomePage.user.email = user.email!;
+                  MyHomePage.user.imageLink = user.photoURL!;
+
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                         builder: (context) => MyHomePage(
-                          title: "Late Night Hacks 2022",
-                          user: user,
+                          title: "Astro Learners",
+                          //user: user,
                         ),
                       ),
                   );
