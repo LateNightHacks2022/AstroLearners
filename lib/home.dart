@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'profile.dart';
 import 'login_button.dart';
+import 'logout_button.dart';
 import 'main.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -127,7 +128,9 @@ class _NavigationDrawer extends State<NavigationDrawer> {
               );
             },
           ),
-          const Center(child: GoogleSignInButton()),
+          MyHomePage.user.name == "Username" ?
+          const Center(child: GoogleSignInButton())
+          : const Center(child: GoogleSignOutButton()),
         ],
       ));
 }
