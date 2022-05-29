@@ -1,21 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import './authentication.dart';
 import './home.dart';
 
-class GoogleSignInButton extends StatefulWidget {
-  const GoogleSignInButton({Key? key}) : super(key: key);
+class GoogleSignOutButton extends StatefulWidget {
+  const GoogleSignOutButton({Key? key}) : super(key: key);
 
   @override
-  _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
+  _GoogleSignOutButton createState() => _GoogleSignOutButton();
 }
 
-class _GoogleSignInButtonState extends State<GoogleSignInButton> {
+class _GoogleSignOutButton extends State<GoogleSignOutButton> {
   bool _isSigningIn = false;
 
   @override
   Widget build(BuildContext context) {
+    bool _isSigningOut = false;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: _isSigningIn
@@ -33,30 +34,25 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
               ),
               onPressed: () async {
                 setState(() {
-                  _isSigningIn = true;
+                  _isSigningOut = true;
                 });
-
-                User? user =
-                    await Authentication.signInWithGoogle(context);
-
+                await Authentication.signOut(context: context);
                 setState(() {
-                  _isSigningIn = false;
+                  _isSigningOut = false;
                 });
+                MyHomePage.user.name = "Username";
+                MyHomePage.user.email = "username@gmail.com";
+                MyHomePage.user.imageLink =
+                    "https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=1600&h=900";
 
-                if (user != null) {
-                  MyHomePage.user.name = user.displayName!;
-                  MyHomePage.user.email = user.email!;
-                  MyHomePage.user.imageLink = user.photoURL!;
-
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (context) => MyHomePage(
-                          title: "Astro Learners",
-                          //user: user,
-                        ),
-                      ),
-                  );
-                }
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(
+                      title: "Astro Learners",
+                      //user: user,
+                    ),
+                  ),
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -64,11 +60,11 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const <Widget>[
-                    Icon(Icons.login),
+                    Icon(Icons.logout),
                     Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        'Sign in with Google',
+                        'Sign Out',
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.black54,

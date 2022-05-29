@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // new
 import 'package:firebase_core/firebase_core.dart'; // new
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'navigation_drawer.dart'; // new
-import './authentication.dart';
-import './firebase_options.dart';
-
-import 'package:late_nighthacks/login_button.dart';
+import 'firebase_options.dart';
+import 'home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -94,9 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
       drawer: const NavigationDrawer(),
+
     );
   }
 }
+
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key, User? user}) : super(key: key);
@@ -168,9 +163,9 @@ class NavigationDrawer extends StatelessWidget {
       );
 }
 
+
 class StudyPlanet extends StatelessWidget {
   const StudyPlanet(this.shipTitle, {Key? key}) : super(key: key);
-
   final String shipTitle;
 
   @override
@@ -459,6 +454,7 @@ class _MissionLogState extends State<MissionLog> {
                             fontSize: 18,
                             color: Color.fromARGB(255, 0, 255, 247),
                           ),
+
                         ),
                       ),
                     ),
@@ -469,6 +465,7 @@ class _MissionLogState extends State<MissionLog> {
           ),
         ),
       ),
+
     );
   }
 
