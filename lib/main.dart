@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // new
@@ -585,11 +586,20 @@ class _TodoListState extends State<TodoList> {
     });
   }
 
-  void _addTodoItem(String name, int priority) {
+  void _addTodoItem(String name, int priority, bool checked) async {
+    // TODO: Create doc in firebase, get back doc id
+    final DocumentReference docId = await FirebaseFirestore.instance
+        .collection("AstroLearnersTODOS")
+        .doc("Shc3Dcj0YRaIqUBg50RP")
+        .collection("TODOS")
+        .add({
+      "name": name,
+      "priority": priority,
+      "checked": checked,
+    });
     setState(() {
-      // TODO: Create doc in firebase, get back doc id
-      _todos.add(
-          Todo(docId: "dddd", name: name, checked: false, priority: priority));
+      _todos.add(Todo(
+          docId: docId.id, name: name, checked: checked, priority: priority));
     });
     _textFieldController.clear();
   }
@@ -600,63 +610,64 @@ class _TodoListState extends State<TodoList> {
     int dropdownValue = 1;
 
     return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => StatefulBuilder(
-              builder: (BuildContext context, setState) {
-                return AlertDialog(
-                  title: const Text('Add a new task'),
-                  content: SingleChildScrollView(
-                    child: ListBody(
-                      children: <Widget>[
-                        TextField(
-                          controller: _textFieldController,
-                          decoration: const InputDecoration(
-                            hintText: "Task Name",
-                          ),
-                        ),
-                        DropdownButton<String>(
-                          value: dropdownValue.toString(),
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.deepPurple),
-                          underline: Container(
-                            height: 2,
-                            color: Colors.deepPurpleAccent,
-                          ),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownValue = int.parse(newValue!);
-                            });
-                          },
-                          items: <int>[1, 2]
-                              .map<DropdownMenuItem<String>>((int value) {
-                            return DropdownMenuItem<String>(
-                              value: value.toString(),
-                              child: Text(value.toString()),
-                            );
-                          }).toList(),
-                        )
-                      ],
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => StatefulBuilder(
+        builder: (BuildContext context, setState) {
+          return AlertDialog(
+            title: const Text('Add a new task'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                    controller: _textFieldController,
+                    decoration: const InputDecoration(
+                      hintText: "Task Name",
                     ),
                   ),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: const Text('Cancel'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
+                  DropdownButton<String>(
+                    value: dropdownValue.toString(),
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
                     ),
-                    FlatButton(
-                      child: const Text('Add'),
-                      onPressed: () {
-                        _addTodoItem(_textFieldController.text, dropdownValue);
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            ));
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownValue = int.parse(newValue!);
+                      });
+                    },
+                    items:
+                        <int>[1, 2].map<DropdownMenuItem<String>>((int value) {
+                      return DropdownMenuItem<String>(
+                        value: value.toString(),
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                  )
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: const Text('Add'),
+                onPressed: () {
+                  _addTodoItem(_textFieldController.text, dropdownValue, false);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
