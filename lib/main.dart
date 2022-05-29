@@ -15,8 +15,7 @@ import 'package:late_nighthacks/login_button.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.web);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.web);
   runApp(const MyApp());
 }
 
@@ -101,8 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key, User? user})
-      : super(key: key);
+  const NavigationDrawer({Key? key, User? user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -130,41 +128,45 @@ class NavigationDrawer extends StatelessWidget {
       );
 
   Widget buildMenuItems(BuildContext context) => Container(
-      padding: const EdgeInsets.all(20),
-      child: Wrap(
-        runSpacing: 15,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.home_outlined),
-            title: const Text("Home"),
-            onTap: () {
-              debugPrint("Clicked Home");
-              Navigator.pop(context);
-              Navigator.pushReplacement(
+        padding: const EdgeInsets.all(20),
+        child: Wrap(
+          runSpacing: 15,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.home_outlined),
+              title: const Text("Home"),
+              onTap: () {
+                debugPrint("Clicked Home");
+                Navigator.pop(context);
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const MyHomePage(
-                            title: 'AstroLearners',
-                          )));
-            },
-          ),
-          // TODO: Add a function/widget that will loop through existing task lists and display here
-          ListTile(
-            leading: const Icon(Icons.public),
-            title: const Text("Physics Planet"),
-            onTap: () {
-              debugPrint("Clicked Physics Ship");
-              Navigator.pop(context);
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const StudyPlanet("Physics Planet")),
-              );
-            },
-          ),
-          Center(child: GoogleSignInButton()),
-        ],
-      ));
+                    builder: (context) => const MyHomePage(
+                      title: 'AstroLearners',
+                    ),
+                  ),
+                );
+              },
+            ),
+            // TODO: Add a function/widget that will loop through existing task lists and display here
+            ListTile(
+              leading: const Icon(Icons.public),
+              title: const Text("Physics Planet"),
+              onTap: () {
+                debugPrint("Clicked Physics Ship");
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const StudyPlanet("Physics Planet")),
+                );
+              },
+            ),
+            Center(child: GoogleSignInButton()),
+          ],
+        ),
+      );
 }
 
 class StudyPlanet extends StatelessWidget {
@@ -204,9 +206,10 @@ class StudyPlanet extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MissionLog(
-                                title: 'Chloe Misison log',
-                              )),
+                        builder: (context) => const MissionLog(
+                          title: 'Chloe Misison log',
+                        ),
+                      ),
                     );
                   },
                   child: Stack(
@@ -224,7 +227,7 @@ class StudyPlanet extends StatelessWidget {
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: const [
                               Text(
                                 "Name: Chloe",
                                 style: TextStyle(
@@ -245,20 +248,21 @@ class StudyPlanet extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                          top: 0,
-                          left: 15,
-                          child: Container(
-                            padding: const EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(90),
-                              color: Color.fromARGB(255, 66, 120, 140),
-                            ),
-                            child: Image.asset(
-                              'images/astrored.png',
-                              height: 120,
-                              width: 120,
-                            ),
-                          )),
+                        top: 0,
+                        left: 15,
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(90),
+                            color: Color.fromARGB(255, 66, 120, 140),
+                          ),
+                          child: Image.asset(
+                            'images/astrored.png',
+                            height: 120,
+                            width: 120,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -285,7 +289,7 @@ class StudyPlanet extends StatelessWidget {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               "Name: Sam",
                               style: TextStyle(
@@ -306,20 +310,21 @@ class StudyPlanet extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                        top: 0,
-                        left: 15,
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(90),
-                            color: Color.fromARGB(255, 66, 120, 140),
-                          ),
-                          child: Image.asset(
-                            'images/astrored.png',
-                            height: 120,
-                            width: 120,
-                          ),
-                        )),
+                      top: 0,
+                      left: 15,
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(90),
+                          color: Color.fromARGB(255, 66, 120, 140),
+                        ),
+                        child: Image.asset(
+                          'images/astrored.png',
+                          height: 120,
+                          width: 120,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -344,126 +349,118 @@ class _MissionLogState extends State<MissionLog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(widget.title),
-              const SizedBox(width: 20),
-              Image.asset(
-                '../assets/images/rocket.png',
-                fit: BoxFit.contain,
-                height: 75,
-              ),
-            ],
-          ),
-          toolbarHeight: 80.0,
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(widget.title),
+            const SizedBox(width: 20),
+            Image.asset(
+              '../assets/images/rocket.png',
+              fit: BoxFit.contain,
+              height: 75,
+            ),
+          ],
         ),
-        body: Container(
+        toolbarHeight: 80.0,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: gradient1Stops,
+            colors: gradient1Colors,
+          ),
+        ),
+        child: Center(
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.8,
+            width: MediaQuery.of(context).size.width * 0.8,
+            padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: gradient1Stops,
-              colors: gradient1Colors,
-            )),
-            child: Center(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.8,
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: const EdgeInsets.all(20.0),
-
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(207, 0, 0, 0),
+              borderRadius: BorderRadius.circular(20),
+              color: const Color.fromARGB(207, 0, 0, 0),
+            ),
+            child: Stack(children: [
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  // height: MediaQuery.of(context).size.height * 0.2,
+                  // width: MediaQuery.of(context).size.width * 0.5,
+                  alignment: Alignment.topLeft,
+                  // margin: new EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                  child: FittedBox(
+                    fit: BoxFit.fill,
+                    child: SvgPicture.asset(
+                      'svg/topLeftCorner.svg',
+                      color: Color.fromARGB(255, 0, 255, 247),
+                      semanticsLabel: 'topLeftCorner',
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                    ),
+                  ),
                 ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: Container(
-                        // height: MediaQuery.of(context).size.height * 0.2,
-                        // width: MediaQuery.of(context).size.width * 0.5,
-                        alignment: Alignment.topLeft,
-                        // margin: new EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                        child: FittedBox(
-                          fit: BoxFit.fill,
-                          child: SvgPicture.asset(
-                            'svg/topLeftCorner.svg',
-                            color: Color.fromARGB(255, 0, 255, 247),
-                            semanticsLabel: 'topLeftCorner',
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        alignment: Alignment.bottomRight,
-                        // margin: new EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                        child: FittedBox(
-                          fit: BoxFit.fill,
-                          child: SvgPicture.asset(
-                            'svg/bottomRightCorner.svg',
-                            color: Color.fromARGB(255, 0, 255, 247),
-                            semanticsLabel: 'topLeftCorner',
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          margin: const EdgeInsets.all(40),
-                          height:
-                              MediaQuery.of(context).size.height * 0.8 - 120,
-                          width: MediaQuery.of(context).size.width * 0.8 - 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color.fromARGB(187, 177, 177, 177),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Name: Chloe",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "Items remaining: 3",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "Mission status: In progress",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     Navigator.pop(context);
-                //   },
-                //   child: const Text('Go back!'),
-                // ),
               ),
-            )));
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  alignment: Alignment.bottomRight,
+                  // margin: new EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                  child: FittedBox(
+                    fit: BoxFit.fill,
+                    child: SvgPicture.asset(
+                      'svg/bottomRightCorner.svg',
+                      color: const Color.fromARGB(255, 0, 255, 247),
+                      semanticsLabel: 'topLeftCorner',
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(10.0),
+                    margin: const EdgeInsets.all(40),
+                    height: MediaQuery.of(context).size.height * 0.8 - 120,
+                    width: MediaQuery.of(context).size.width * 0.8 - 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color.fromARGB(187, 177, 177, 177),
+                    ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            "Name: Chloe",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Items remaining: 3",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Mission status: In progress",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                        ]),
+                  ),
+                ),
+              ),
+            ]),
+          ),
+        ),
+      ),
+    );
   }
 
   List<Color> get gradient1Colors {
