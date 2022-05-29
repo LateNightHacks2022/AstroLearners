@@ -74,12 +74,12 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        planetColour = 'White';
+                        planetColour = 'Green';
                       });
                     },
-                    child: Text('White'),
+                    child: Text('Green'),
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.white, onPrimary: Colors.black),
+                        primary: Colors.green, onPrimary: Colors.black),
                   ),
                 ),
                 Container(
