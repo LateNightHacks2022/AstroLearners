@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import './authentication.dart';
 import './home.dart';
+import 'firebase_writer.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   const GoogleSignInButton({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class GoogleSignInButton extends StatefulWidget {
 
 class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   bool _isSigningIn = false;
+  FirebaseWrite writer = FirebaseWrite();
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +46,15 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 });
 
                 if (user != null) {
+                  await writer.addUserToCollection(user);
+
                   MyHomePage.user.name = user.displayName!;
                   MyHomePage.user.email = user.email!;
                   MyHomePage.user.imageLink = user.photoURL!;
 
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                        builder: (context) => MyHomePage(
+                        builder: (context) => const MyHomePage(
                           title: "Astro Learners",
                           //user: user,
                         ),
