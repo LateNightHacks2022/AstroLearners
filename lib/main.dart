@@ -579,15 +579,23 @@ class _TodoListState extends State<TodoList> {
     );
   }
 
-  void _handleTodoChange(Todo todo) {
+  void _handleTodoChange(Todo todo) async {
+    // TODO: update firebase
+
+    await FirebaseFirestore.instance
+        .collection("AstroLearnersTODOS")
+        .doc("Shc3Dcj0YRaIqUBg50RP")
+        .collection("TODOS")
+        .doc(todo.docId)
+        .update({
+      "checked": !todo.checked,
+    });
     setState(() {
       todo.checked = !todo.checked;
-      // TODO: update firebase
     });
   }
 
   void _addTodoItem(String name, int priority, bool checked) async {
-    // TODO: Create doc in firebase, get back doc id
     final DocumentReference docId = await FirebaseFirestore.instance
         .collection("AstroLearnersTODOS")
         .doc("Shc3Dcj0YRaIqUBg50RP")
@@ -597,6 +605,7 @@ class _TodoListState extends State<TodoList> {
       "priority": priority,
       "checked": checked,
     });
+    print(docId.id);
     setState(() {
       _todos.add(Todo(
           docId: docId.id, name: name, checked: checked, priority: priority));
