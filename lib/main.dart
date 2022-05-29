@@ -197,7 +197,9 @@ class _MyAppState extends State<MyApp> {
                 'Planet Name is $planetName \nPlanet Depature Date is $examDate \nPlanet Color is $planetColour'),
             MaterialButton(
               onPressed: () {
-                confirmSelection = true;
+                setState(() {
+                  confirmSelection = true;
+                });
               },
               color: Colors.green,
               child: const Text('Confirm Selection',
