@@ -23,9 +23,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Late Night Hacks 2022',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
-      home: const MyHomePage(title: 'Weh Night Hacks 2022'),
+      home: const StudyPlanet(
+          "Physics Planet"), //MyHomePage(title: 'Weh Night Hacks 2022'),
     );
   }
 }
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(widget.title),
             const SizedBox(width: 20),
             Image.asset(
-              'assets/images/rocket.png',
+              '../assets/images/rocket.png',
               fit: BoxFit.contain,
               height: 75,
             ),
@@ -134,7 +135,7 @@ class NavigationDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const MyHomePage(
-                            title: 'Weh Night Hacks 2022',
+                            title: 'AstroLearners',
                           )));
             },
           ),
@@ -167,33 +168,193 @@ class StudyPlanet extends StatelessWidget {
       appBar: AppBar(
         title: Text(shipTitle),
       ),
-      body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Container(
-          // grey box
-          width: 320,
-          height: 240,
-          color: Colors.grey[300],
-          child: Center(
-            child: Container(
-              // red box
-              width: 240, // max-width is 240
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.red[400],
-              ),
-              child: Text(
-                'Lorem ipsum',
-                style: GoogleFonts.montserrat(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+      body: Container(
+        padding: const EdgeInsets.all(8),
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/nightBg.jpg"),
+            fit: BoxFit.cover,
           ),
         ),
-      ]),
+        child: Wrap(
+            spacing: 8.0, // gap between adjacent chips
+            runSpacing: 4.0,
+            alignment: WrapAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(8),
+                width: 300,
+                height: 240,
+                // color: const Color.fromARGB(164, 0, 251, 255),
+                child: InkWell(
+                  onTap: () {
+                    print("Click event on Container");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MissionLog(
+                                title: 'Chloe log',
+                              )),
+                    );
+                  },
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 125,
+                        left: 10,
+                        child: Container(
+                          width: 260,
+                          height: 100,
+                          padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Color.fromARGB(187, 177, 177, 177),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Name: Chloe",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Items remaining: 3",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Mission status: In progress",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                          top: 0,
+                          left: 15,
+                          child: Container(
+                            padding: const EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(90),
+                              color: Color.fromARGB(255, 66, 120, 140),
+                            ),
+                            child: Image.asset(
+                              'images/astrored.png',
+                              height: 120,
+                              width: 120,
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(8),
+                width: 300,
+                height: 240,
+                // color: const Color.fromARGB(164, 0, 251, 255),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      top: 125,
+                      left: 10,
+                      child: Container(
+                        width: 260,
+                        height: 100,
+                        padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromARGB(187, 177, 177, 177),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Name: Sam",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "Items remaining: 3",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "Mission status: In progress",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        top: 0,
+                        left: 15,
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(90),
+                            color: Color.fromARGB(255, 66, 120, 140),
+                          ),
+                          child: Image.asset(
+                            'images/astrored.png',
+                            height: 120,
+                            width: 120,
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+            ]),
+      ),
       drawer: const NavigationDrawer(),
+    );
+  }
+}
+
+class MissionLog extends StatefulWidget {
+  const MissionLog({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<MissionLog> createState() => _MissionLogState();
+}
+
+class _MissionLogState extends State<MissionLog> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(widget.title),
+            const SizedBox(width: 20),
+            Image.asset(
+              '../assets/images/rocket.png',
+              fit: BoxFit.contain,
+              height: 75,
+            ),
+          ],
+        ),
+        toolbarHeight: 80.0,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
+        ),
+      ),
     );
   }
 }
