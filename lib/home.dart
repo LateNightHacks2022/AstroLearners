@@ -114,7 +114,6 @@ class _NavigationDrawer extends State<NavigationDrawer> {
                           )));
             },
           ),
-          // TODO: Add a function/widget that will loop through existing task lists and display here
           ListTile(
             leading: const Icon(Icons.public),
             title: const Text("Physics Planet"),
@@ -122,9 +121,21 @@ class _NavigationDrawer extends State<NavigationDrawer> {
               debugPrint("Clicked Physics Ship");
               Navigator.pop(context);
               Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const StudyPlanet("Physics Planet"),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_location_alt),
+            title: const Text("Add New Planet"),
+            onTap: () {
+              debugPrint("Clicked New Planet");
+              Navigator.pop(context);
+              Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const StudyPlanet("Physics Planet"),)
+                MaterialPageRoute(builder: (context) => NewPlanetSelection()),
               );
             },
           ),
