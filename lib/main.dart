@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'navigation_drawer.dart'; // new
 
@@ -25,8 +26,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const StudyPlanet(
-          "Physics Planet"), //MyHomePage(title: 'Weh Night Hacks 2022'),
+      home: const MissionLog(
+          title:
+              "Chloe Misison Log"), //MyHomePage(title: 'Weh Night Hacks 2022'),
     );
   }
 }
@@ -190,12 +192,12 @@ class StudyPlanet extends StatelessWidget {
                 // color: const Color.fromARGB(164, 0, 251, 255),
                 child: InkWell(
                   onTap: () {
-                    print("Click event on Container");
+                    // print("Click event on Container");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const MissionLog(
-                                title: 'Chloe log',
+                                title: 'Chloe Misison log',
                               )),
                     );
                   },
@@ -329,32 +331,148 @@ class MissionLog extends StatefulWidget {
 }
 
 class _MissionLogState extends State<MissionLog> {
+  // final GlobalKey _widgetKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(widget.title),
-            const SizedBox(width: 20),
-            Image.asset(
-              '../assets/images/rocket.png',
-              fit: BoxFit.contain,
-              height: 75,
-            ),
-          ],
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(widget.title),
+              const SizedBox(width: 20),
+              Image.asset(
+                '../assets/images/rocket.png',
+                fit: BoxFit.contain,
+                height: 75,
+              ),
+            ],
+          ),
+          toolbarHeight: 80.0,
         ),
-        toolbarHeight: 80.0,
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
-      ),
-    );
+        body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: gradient1Stops,
+              colors: gradient1Colors,
+            )),
+            child: Center(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                width: MediaQuery.of(context).size.width * 0.8,
+                padding: const EdgeInsets.all(20.0),
+
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: const Color.fromARGB(207, 0, 0, 0),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Container(
+                        // height: MediaQuery.of(context).size.height * 0.2,
+                        // width: MediaQuery.of(context).size.width * 0.5,
+                        alignment: Alignment.topLeft,
+                        // margin: new EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: SvgPicture.asset(
+                            'svg/topLeftCorner.svg',
+                            color: Color.fromARGB(255, 0, 255, 247),
+                            semanticsLabel: 'topLeftCorner',
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        alignment: Alignment.bottomRight,
+                        // margin: new EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: SvgPicture.asset(
+                            'svg/bottomRightCorner.svg',
+                            color: Color.fromARGB(255, 0, 255, 247),
+                            semanticsLabel: 'topLeftCorner',
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          margin: const EdgeInsets.all(40),
+                          height:
+                              MediaQuery.of(context).size.height * 0.8 - 120,
+                          width: MediaQuery.of(context).size.width * 0.8 - 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Color.fromARGB(187, 177, 177, 177),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Name: Chloe",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Items remaining: 3",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Mission status: In progress",
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //   },
+                //   child: const Text('Go back!'),
+                // ),
+              ),
+            )));
+  }
+
+  List<Color> get gradient1Colors {
+    return [
+      const Color.fromARGB(255, 0, 32, 47),
+      const Color.fromARGB(255, 0, 20, 29),
+      const Color.fromARGB(255, 0, 20, 29),
+      const Color.fromARGB(255, 0, 32, 47),
+    ];
+  }
+
+  List<double> get gradient1Stops {
+    return const [
+      0.1,
+      0.4,
+      0.6,
+      1.0,
+    ];
   }
 }
