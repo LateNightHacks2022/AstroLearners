@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
             Text(
-              '<We gonna list their personal stats/info or num of ships here or some shit>',
+              '<We gonna list their personal stats/info or number of planets the user has in this homepage>',
             ),
           ],
         ),
