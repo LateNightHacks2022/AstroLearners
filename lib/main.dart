@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // new
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'firebase_options.dart';
 import 'home.dart';
+import 'login_button.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,11 +26,143 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      //home: const MissionLog(title: "Chloe Misison Log"),
+      // home: const MissionLog(title: "Chloe Misison Log"),
       home: const MyHomePage(title: 'Weh Night Hacks 2022'),
     );
   }
 }
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title, User? user})
+      : super(key: key);
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(widget.title),
+            const SizedBox(width: 20),
+            Image.asset(
+              '../assets/images/rocket.png',
+              fit: BoxFit.contain,
+              height: 75,
+            ),
+          ],
+        ),
+        toolbarHeight: 80.0,
+      ),
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              '<We gonna list their personal stats/info or num of ships here or some shit>',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+      drawer: const NavigationDrawer(),
+    );
+  }
+}
+
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({Key? key, User? user}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Drawer(
+        child: SingleChildScrollView(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[buildHeader(context), buildMenuItems(context)],
+        )),
+      );
+
+  Widget buildHeader(BuildContext context) => Container(
+        padding: EdgeInsets.only(
+            top: 24 + MediaQuery.of(context).padding.top, bottom: 5),
+        // TODO: Put user's data
+        child: Column(children: const [
+          CircleAvatar(
+            radius: 52,
+            backgroundImage: NetworkImage(
+                "https://image.cnbcfm.com/api/v1/image/105992231-1561667465295gettyimages-521697453.jpeg?v=1561667497&w=1600&h=900"),
+          ),
+          SizedBox(height: 12),
+          Text('Username', style: TextStyle(fontSize: 28)),
+          Text('username@gmail.com', style: TextStyle(fontSize: 15))
+        ]),
+      );
+
+  Widget buildMenuItems(BuildContext context) => Container(
+        padding: const EdgeInsets.all(20),
+        child: Wrap(
+          runSpacing: 15,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.home_outlined),
+              title: const Text("Home"),
+              onTap: () {
+                debugPrint("Clicked Home");
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyHomePage(
+                      title: 'AstroLearners',
+                    ),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.public),
+              title: const Text("Physics Planet"),
+              onTap: () {
+                debugPrint("Clicked Physics Ship");
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const StudyPlanet("Physics Planet")),
+                );
+              },
+            ),
+            Center(child: GoogleSignInButton()),
+          ],
+        ),
+      );
+}
+
 
 class StudyPlanet extends StatelessWidget {
   const StudyPlanet(this.shipTitle, {Key? key}) : super(key: key);
@@ -319,7 +454,6 @@ class _MissionLogState extends State<MissionLog> {
                             fontSize: 18,
                             color: Color.fromARGB(255, 0, 255, 247),
                           ),
-
                         ),
                       ),
                     ),
@@ -330,7 +464,6 @@ class _MissionLogState extends State<MissionLog> {
           ),
         ),
       ),
-
     );
   }
 
@@ -421,43 +554,83 @@ class _TodoListState extends State<TodoList> {
 
   int priotityCount = 0;
 
-  // TODO: fetch the todo from firebase by query the todo that has the matching planet id and matching user id
+  final Stream<QuerySnapshot> _todosStream = FirebaseFirestore.instance
+      .collection('AstroLearnersTODOS')
+      .doc("Shc3Dcj0YRaIqUBg50RP")
+      .collection("TODOS")
+      .snapshots();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
-      body: Scrollbar(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          children: _todos.map((Todo todo) {
-            return TodoItem(
-              todo: todo,
-              onTodoChanged: _handleTodoChange,
-            );
-          }).toList(),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color.fromARGB(255, 0, 255, 247),
-          foregroundColor: Color.fromARGB(255, 0, 0, 0),
-          onPressed: () => _displayDialog(),
-          tooltip: 'Add Item',
-          child: const Icon(Icons.add_task)),
+    return StreamBuilder<QuerySnapshot>(
+      stream: _todosStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text("Loading");
+        }
+
+        return Scaffold(
+          backgroundColor: Color.fromARGB(0, 0, 0, 0),
+          body: Scrollbar(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return TodoItem(
+                  todo: Todo(
+                      docId: document.id as String,
+                      name: data['name'] as String,
+                      checked: data['checked'] as bool,
+                      priority: data['priority'] as int),
+                  onTodoChanged: _handleTodoChange,
+                );
+              }).toList(),
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+              backgroundColor: const Color.fromARGB(255, 0, 255, 247),
+              foregroundColor: Color.fromARGB(255, 0, 0, 0),
+              onPressed: () => _displayDialog(),
+              tooltip: 'Add Item',
+              child: const Icon(Icons.add_task)),
+        );
+      },
     );
   }
 
-  void _handleTodoChange(Todo todo) {
+  void _handleTodoChange(Todo todo) async {
+    await FirebaseFirestore.instance
+        .collection("AstroLearnersTODOS")
+        .doc("Shc3Dcj0YRaIqUBg50RP")
+        .collection("TODOS")
+        .doc(todo.docId)
+        .update({
+      "checked": !todo.checked,
+    });
     setState(() {
       todo.checked = !todo.checked;
-      // TODO: update firebase
     });
   }
 
-  void _addTodoItem(String name, int priority) {
+  void _addTodoItem(String name, int priority, bool checked) async {
+    final DocumentReference docId = await FirebaseFirestore.instance
+        .collection("AstroLearnersTODOS")
+        .doc("Shc3Dcj0YRaIqUBg50RP")
+        .collection("TODOS")
+        .add({
+      "name": name,
+      "priority": priority,
+      "checked": checked,
+    });
+
     setState(() {
-      // TODO: Create doc in firebase, get back doc id
-      _todos.add(
-          Todo(docId: "dddd", name: name, checked: false, priority: priority));
+      _todos.add(Todo(
+          docId: docId.id, name: name, checked: checked, priority: priority));
     });
     _textFieldController.clear();
   }
@@ -468,63 +641,64 @@ class _TodoListState extends State<TodoList> {
     int dropdownValue = 1;
 
     return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => StatefulBuilder(
-              builder: (BuildContext context, setState) {
-                return AlertDialog(
-                  title: const Text('Add a new task'),
-                  content: SingleChildScrollView(
-                    child: ListBody(
-                      children: <Widget>[
-                        TextField(
-                          controller: _textFieldController,
-                          decoration: const InputDecoration(
-                            hintText: "Task Name",
-                          ),
-                        ),
-                        DropdownButton<String>(
-                          value: dropdownValue.toString(),
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.deepPurple),
-                          underline: Container(
-                            height: 2,
-                            color: Colors.deepPurpleAccent,
-                          ),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownValue = int.parse(newValue!);
-                            });
-                          },
-                          items: <int>[1, 2]
-                              .map<DropdownMenuItem<String>>((int value) {
-                            return DropdownMenuItem<String>(
-                              value: value.toString(),
-                              child: Text(value.toString()),
-                            );
-                          }).toList(),
-                        )
-                      ],
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => StatefulBuilder(
+        builder: (BuildContext context, setState) {
+          return AlertDialog(
+            title: const Text('Add a new task'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextField(
+                    controller: _textFieldController,
+                    decoration: const InputDecoration(
+                      hintText: "Task Name",
                     ),
                   ),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: const Text('Cancel'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
+                  DropdownButton<String>(
+                    value: dropdownValue.toString(),
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
                     ),
-                    FlatButton(
-                      child: const Text('Add'),
-                      onPressed: () {
-                        _addTodoItem(_textFieldController.text, dropdownValue);
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            ));
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownValue = int.parse(newValue!);
+                      });
+                    },
+                    items:
+                        <int>[1, 2].map<DropdownMenuItem<String>>((int value) {
+                      return DropdownMenuItem<String>(
+                        value: value.toString(),
+                        child: Text(value.toString()),
+                      );
+                    }).toList(),
+                  )
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: const Text('Add'),
+                onPressed: () {
+                  _addTodoItem(_textFieldController.text, dropdownValue, false);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
