@@ -60,6 +60,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/earth2.jpg
+    - assets/black_planet.jpg
+    - assets/blue_planet.jpg
+    - assets/pink_planet.jpg
+    - assets/white_planet.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
