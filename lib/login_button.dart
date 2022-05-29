@@ -44,7 +44,6 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 });
 
                 if (user != null) {
-                  debugPrint("in login button $user");
                   MyHomePage.user.name = user.displayName!;
                   MyHomePage.user.email = user.email!;
                   MyHomePage.user.imageLink = user.photoURL!;
