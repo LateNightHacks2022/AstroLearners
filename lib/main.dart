@@ -10,11 +10,13 @@ import 'package:flutter/material.dart';
  */
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
   return;
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -22,12 +24,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  //List<String> _colour = ['yellow', 'blue', 'green'];
-
   final _textController0 = TextEditingController();
   final _textController1 = TextEditingController();
-  //final _textController2 = TextEditingController();
-  //final _textController = <TextEditingController>[];
   String planetName = ' ';
   String examDate = ' ';
   String planetColour = ' ';
@@ -45,18 +43,10 @@ class _MyAppState extends State<MyApp> {
           title: const Center(
             child: Text('AstroLearners'),
           ),
+          backgroundColor: const Color.fromARGB(255, 38, 65, 218),
         ),
         body: Column(
           children: [
-            /*
-            Container(
-              height: 600,
-              width: 1000,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/earth2.jpg'), fit: BoxFit.cover),
-              ),
-            ),*/
             TextField(
               textAlign: TextAlign.center,
               controller: _textController0,
@@ -91,15 +81,6 @@ class _MyAppState extends State<MyApp> {
               color: Colors.green,
               child: const Text('Apply', style: TextStyle(color: Colors.white)),
             ),
-            /*
-            TextField(
-              textAlign: TextAlign.center,
-              controller: _textController2,
-              decoration: const InputDecoration(
-                hintText: 'What\'s your planet colour?',
-                border: OutlineInputBorder(),
-              ),
-            ),*/
             const Text(
               'What\'s your planet colour?',
               style: TextStyle(
@@ -184,15 +165,6 @@ class _MyAppState extends State<MyApp> {
                 ],
               ),
             ),
-            /*
-            Expanded(
-              child: Container(
-                child: Center(
-                  child: Text(
-                      'Planet Name is $planetName \nPlanet Depature Date is $examDate\nPlanet Color is '),
-                ),
-              ),
-            ),*/
             Text(
                 'Planet Name is $planetName \nPlanet Depature Date is $examDate \nPlanet Color is $planetColour'),
             MaterialButton(
