@@ -67,7 +67,9 @@ class _MyAppState extends State<MyApp> {
             ),
             MaterialButton(
               onPressed: () {
-                planetName = _textController0.text;
+                setState(() {
+                  planetName = _textController0.text;
+                });
               },
               color: Colors.green,
               child: const Text('Apply', style: TextStyle(color: Colors.white)),
@@ -82,7 +84,9 @@ class _MyAppState extends State<MyApp> {
             ),
             MaterialButton(
               onPressed: () {
-                examDate = _textController1.text;
+                setState(() {
+                  examDate = _textController1.text;
+                });
               },
               color: Colors.green,
               child: const Text('Apply', style: TextStyle(color: Colors.white)),
@@ -110,8 +114,10 @@ class _MyAppState extends State<MyApp> {
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () {
-                      isWhite = true;
-                      planetColour = 'White';
+                      setState(() {
+                        isWhite = true;
+                        planetColour = 'White';
+                      });
                     },
                     child: Text('White'),
                     style: ElevatedButton.styleFrom(
@@ -123,8 +129,10 @@ class _MyAppState extends State<MyApp> {
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () {
-                      isBlack = true;
-                      planetColour = 'Black';
+                      setState(() {
+                        isBlack = true;
+                        planetColour = 'Black';
+                      });
                     },
                     child: Text('Black'),
                     style: ElevatedButton.styleFrom(
@@ -136,8 +144,10 @@ class _MyAppState extends State<MyApp> {
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () {
-                      isPink = true;
-                      planetColour = 'Pink';
+                      setState(() {
+                        isPink = true;
+                        planetColour = 'Pink';
+                      });
                     },
                     child: Text('Pink'),
                     style: ElevatedButton.styleFrom(
@@ -149,8 +159,10 @@ class _MyAppState extends State<MyApp> {
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
                     onPressed: () {
-                      isBlue = true;
-                      planetColour = 'Blue';
+                      setState(() {
+                        isBlue = true;
+                        planetColour = 'Blue';
+                      });
                     },
                     child: Text('Blue'),
                     style: ElevatedButton.styleFrom(
